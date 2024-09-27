@@ -74,7 +74,7 @@ public class Filme {
         String sql = "INSERT INTO Filme (idFilme, titulo, duracao, classIndic, genero) VALUES (?, ?, ?, ?, ?)";
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Id: ");
+        System.out.print("Id: ");//ex: MOVIE001
         this.idFilme = scan.nextLine();
 
         System.out.print("Título: ");
@@ -111,6 +111,35 @@ public class Filme {
 
     public void removerFilme(){
 
+    }
+
+    public void listarCatalogo(){
+        String sql = "SELECT * FROM Filme";
+
+        try(Connection conectar = BancoDeDados.getConnection();
+            PreparedStatement stmt  = conectar.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery()){
+
+            System.out.println("FILMES EM CARTAZ:\n ");
+
+            while(resultado.next()){
+                this.titulo = resultado.getString("titulo");
+                this.duracao = resultado.getInt("duracao");
+                this.classIndic = resultado.getString("classIndic");
+                this.genero = resultado.getString("genero");
+
+                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
+                System.out.println(titulo.toUpperCase());
+                System.out.println(duracao + " min");
+                System.out.println(classIndic + " anos");
+                System.out.println(genero);
+                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
+
+                }
+
+        } catch (SQLException e){
+            System.out.println("Erro ao listar filmes: "+ e.getMessage());
+        }
     }
     //</editor-fold>
 

@@ -1,9 +1,7 @@
-import java.util.Scanner;
-
-public class Sistema extends Filme {
+public class Administrador extends Filme {
 
     //<editor-fold desc="Construtor Super Classe">
-    public Sistema(String idFilme, String titulo, int duracao, String classIndic, String genero) {
+    public Administrador(String idFilme, String titulo, int duracao, String classIndic, String genero) {
         super(idFilme, titulo, duracao, classIndic, genero);
     }
     //</editor-fold>

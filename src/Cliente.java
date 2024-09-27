@@ -12,17 +12,17 @@ public class Cliente {
     private String telefone;
     private String email;
     private LocalDate dataDeNascimento;
-    private List<Reserva> historicoReserva;
+
     //</editor-fold>
 
     //<editor-fold desc="Construtor">
-    public Cliente(String nome, String cpf, String telefone, String email, LocalDate dataDeNascimento, List<Reserva> historicoReserva) {
+    public Cliente(String nome, String cpf, String telefone, String email, LocalDate dataDeNascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
         this.dataDeNascimento = dataDeNascimento;
-        this.historicoReserva = historicoReserva;
+
     }
 
     public Cliente() {
@@ -72,13 +72,7 @@ public class Cliente {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public List<Reserva> getHistoricoReserva() {
-        return historicoReserva;
-    }
 
-    public void setHistoricoReserva(List<Reserva> historicoReserva) {
-        this.historicoReserva = historicoReserva;
-    }
     //</editor-fold>
 
     //<editor-fold desc="Ações">
