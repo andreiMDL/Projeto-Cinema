@@ -42,36 +42,40 @@ public class Administrador extends Filme {
     //</editor-fold>
 
     public void optionAdm(){
+        while (true){
 
-        Filme filme = new Filme();
-        Scanner scan3 = new Scanner(System.in);
-        Cliente cliente = new Cliente();
+            Filme filme = new Filme();
+            Scanner scan3 = new Scanner(System.in);
+            Cliente cliente = new Cliente();
 
-        System.out.println("-=-=- Menu ADM -=-=-");
-        System.out.println("[1] Adicionar Filme ");
-        System.out.println("[2] Remover Filme ");
-        System.out.println("[3] Exibir Clientes ");
-        System.out.println("[4] Sair de ADM");
+            System.out.println("-=-=- Menu ADM -=-=-");
+            System.out.println("[1] Adicionar Filme ");
+            System.out.println("[2] Remover Filme ");
+            System.out.println("[3] Exibir Clientes ");
+            System.out.println("[4] Sair de ADM");
 
-        int opcao = scan3.nextInt();
-        scan3.nextLine();
+            int opcao = scan3.nextInt();
+            scan3.nextLine();
 
-        switch(opcao){
-            case 1:
-                System.out.println("-=- Adicionar Filme -=- ");
-                filme.adicionarFilme();
-                break;
+            switch(opcao){
+                case 1:
+                    System.out.println("-=- Adicionar Filme -=- ");
+                    filme.adicionarFilme();
+                    break;
 
-            case 2:
-                System.out.println("-=- Remover Filme -=-");
-                filme.removerFilme();
-                break;
+                case 2:
+                    System.out.println("-=- Remover Filme -=-");
+                    filme.removerFilme();
+                    break;
 
-            case 3:
-                cliente.exibirClientes();
+                case 3:
+                    cliente.exibirClientes();
+                    break;
 
-
-
+                case 4:
+                    System.out.println("Saindo de ADMINISTRADOR...");
+                    return;
+            }
         }
     }
     //</editor-fold>
