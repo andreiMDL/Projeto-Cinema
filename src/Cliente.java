@@ -11,17 +11,17 @@ public class Cliente {
     private String cpf; //CPF usado como Primary key
     private String telefone;
     private String email;
-    private LocalDate dataDeNascimento;
+    private LocalDate dataNascimento;
 
     //</editor-fold>
 
     //<editor-fold desc="Construtor">
-    public Cliente(String nome, String cpf, String telefone, String email, LocalDate dataDeNascimento) {
+    public Cliente(String nome, String cpf, String telefone, String email, LocalDate dataNascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
-        this.dataDeNascimento = dataDeNascimento;
+        this.dataNascimento = dataNascimento;
 
     }
 
@@ -64,12 +64,12 @@ public class Cliente {
         this.email = email;
     }
 
-    public LocalDate getDataDeNascimento() {
-        return dataDeNascimento;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDataDeNascimento(LocalDate dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
 
@@ -105,7 +105,7 @@ public class Cliente {
 
         // Formatando modelo de data String para LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.dataDeNascimento = LocalDate.parse(dataNascimentoStr, formatter);
+        this.dataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
 
         // Tentativa de conexão ao banco de dados e inserção das informações
         try (Connection conectar = BancoDeDados.getConnection(); //Faz a conexão com banco de dados
@@ -115,7 +115,7 @@ public class Cliente {
             stmt.setString(2, this.nome);
             stmt.setString(3, this.email);
             stmt.setString(4, this.telefone);
-            stmt.setDate(5, java.sql.Date.valueOf(this.dataDeNascimento));
+            stmt.setDate(5, java.sql.Date.valueOf(this.dataNascimento));
 
             // Executa a inserção ao banco de dados
             int rowsAffected = stmt.executeUpdate();
@@ -141,21 +141,26 @@ public class Cliente {
              PreparedStatement stmt = conectar.prepareStatement(sql);
              ResultSet resultado = stmt.executeQuery()){
 
-            System.out.println("FILMES EM CARTAZ:\n ");
+            System.out.println("CLIENTES CADASTRADOS:\n ");
 
             while(resultado.next()){
-                this.nome = resultado.getString("idFilme");
-                this.cpf = resultado.getString("titulo");
-                this.telefone = resultado.getString("duracao");
-                this.email = resultado.getString("classIndic");
-                this.dataDeNascimento = LocalDate.parse("dataDeNascimento");
+                this.nome = resultado.getString("nome");
+                this.cpf = resultado.getString("cpf");
+                this.telefone = resultado.getString("telefone");
+                this.email = resultado.getString("email");
+                java.sql.Date sqlDate = resultado.getDate("dataNascimento");
+                if(sqlDate != null){
+                    this.dataNascimento = sqlDate.toLocalDate();
+                }
+                else {
+                    this.dataNascimento = null;
+                }
 
-                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
                 System.out.println("Nome: "+ nome);
                 System.out.println("CPF: "+ cpf);
                 System.out.println("Telefone: "+ telefone);
                 System.out.println("Email: "+ email);
-                System.out.println("Data de Nascimento: "+ dataDeNascimento);
+                System.out.println("Data de Nascimento: "+ dataNascimento != null ? formatData(String.valueOf(dataNascimento)) : "N/A");
                 System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
 
         }
@@ -172,8 +177,8 @@ public class Cliente {
         return cpf.replaceAll("\\D", "").replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
     }
 
-    public String formatData(String dataDeNascimento){
-        return dataDeNascimento.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{2})(\\d{4})", "$1/$2/$3");
+    public String formatData(String dataNascimento){
+        return dataNascimento.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{2})(\\d{4})", "$1/$2/$3");
     }
 
     public String formatarTelefone(String telefone){

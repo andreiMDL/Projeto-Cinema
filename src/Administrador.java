@@ -1,7 +1,5 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Scanner;
+import java.io.Console;
 
 public class Administrador extends Filme {
 
@@ -16,10 +14,12 @@ public class Administrador extends Filme {
 
     }
     //<editor-fold desc="Acesso ao perfil ADMINISTRADOR">
-    public void acessoAdm(){
+    public boolean acessoAdm(){
 
         Scanner scan2 = new Scanner(System.in);
         boolean isAdm = false;//Torna a entrada como adm falsa
+        Console console = System.console();// Instância do console
+
 
         System.out.printf("Digite a senha: ");
         String senha = scan2.nextLine();
@@ -31,7 +31,8 @@ public class Administrador extends Filme {
         else{
             System.out.println("Senha Incorreta. Acesso Negado.");
         }
-            
+
+        return isAdm;
     }
 
     private boolean verficarSenha(String senhaDigitada) {

@@ -1,10 +1,12 @@
 import java.util.Scanner;
 
+
 public class Options {
 
     Scanner scn = new Scanner(System.in);
     Cliente cliente = new Cliente();
     Administrador adm = new Administrador();
+
 
     public void exibirOptions() {
 
@@ -33,8 +35,9 @@ public class Options {
 
             }
             else if(opt == 5){
-                adm.acessoAdm();
-
+                if(adm.acessoAdm()){
+                    adm.optionAdm();
+                }
             } else if (opt == 6) {
                 System.out.println("Obrigado e Volte Sempre!");
                 break;
