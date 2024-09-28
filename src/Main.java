@@ -15,8 +15,6 @@ public class Main {
 
 
 
-        //        System.out.println("FAÇA SEU CADASTRO: \n");
-//        cliente.cadastroCliente();
 
 
 

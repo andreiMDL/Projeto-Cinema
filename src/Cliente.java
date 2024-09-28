@@ -101,10 +101,10 @@ public class Cliente {
 
         System.out.println("Digite sua data de nascimento (Apenas Números): ");
         String dataNascimentoStr = scan.nextLine();
-        dataNascimentoStr = formatData(dataNascimentoStr);
+
 
         // Formatando modelo de data String para LocalDate
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         this.dataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
 
         // Tentativa de conexão ao banco de dados e inserção das informações
@@ -137,11 +137,14 @@ public class Cliente {
     public void exibirClientes(){
         String sql = "SELECT * FROM Cliente";
 
+
         try (Connection conectar = BancoDeDados.getConnection();
              PreparedStatement stmt = conectar.prepareStatement(sql);
              ResultSet resultado = stmt.executeQuery()){
 
             System.out.println("CLIENTES CADASTRADOS:\n ");
+
+
 
             while(resultado.next()){
                 this.nome = resultado.getString("nome");
@@ -156,11 +159,16 @@ public class Cliente {
                     this.dataNascimento = null;
                 }
 
+                //Formatar a Data de Nascimento para dd/mm/yyyy
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String dataNascimentoFormatada = this.dataNascimento != null ? this.dataNascimento.format(formatter) : "N/A";
+
+                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
                 System.out.println("Nome: "+ nome);
                 System.out.println("CPF: "+ cpf);
                 System.out.println("Telefone: "+ telefone);
                 System.out.println("Email: "+ email);
-                System.out.println("Data de Nascimento: "+ dataNascimento != null ? formatData(String.valueOf(dataNascimento)) : "N/A");
+                System.out.println("Data de Nascimento: "+ dataNascimentoFormatada);
                 System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
 
         }
@@ -177,9 +185,6 @@ public class Cliente {
         return cpf.replaceAll("\\D", "").replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
     }
 
-    public String formatData(String dataNascimento){
-        return dataNascimento.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{2})(\\d{4})", "$1/$2/$3");
-    }
 
     public String formatarTelefone(String telefone){
         return this.telefone.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");

@@ -9,10 +9,12 @@ public class Administrador extends Filme {
 
 
     }
+    //</editor-fold>
 
     public Administrador() {
 
     }
+
     //<editor-fold desc="Acesso ao perfil ADMINISTRADOR">
     public boolean acessoAdm(){
 
@@ -41,6 +43,7 @@ public class Administrador extends Filme {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Menu de Opções ADM">
     public void optionAdm(){
         while (true){
 

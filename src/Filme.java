@@ -83,6 +83,7 @@ public class Filme {
 
         System.out.print("Duração (Min): ");
         this.duracao = scan.nextInt();
+        scan.nextLine();
 
         System.out.println("Classificação Indicativa: ");
         this.classIndic = scan.nextLine();
