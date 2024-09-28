@@ -70,6 +70,7 @@ public class Filme {
     //</editor-fold>
 
     //<editor-fold desc="Ações">
+    //Adicionar Filme
     public void adicionarFilme(){
         String sql = "INSERT INTO Filme (idFilme, titulo, duracao, classIndic, genero) VALUES (?, ?, ?, ?, ?)";
         Scanner scan = new Scanner(System.in);
@@ -98,8 +99,8 @@ public class Filme {
             stmt.setString(4, classIndic);
             stmt.setString(5, genero);
 
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0){
+            int linhasModificadas = stmt.executeUpdate();
+            if (linhasModificadas > 0){
                 System.out.println("Catálogo atualizado com sucesso!");
             }
 
@@ -109,8 +110,31 @@ public class Filme {
 
     }
 
+    // REMOVER FILME
     public void removerFilme(){
+        String sql = "DELETE FROM Filme WHERE idFilme = ?";
+        Scanner scan1 = new Scanner(System.in);
 
+        System.out.println("REMOVER FILME DO CATÁLOGO: ");
+        System.out.println("Digite o ID do filme a ser removido: ");
+        this.idFilme = scan1.nextLine();
+
+        try(Connection conectar = BancoDeDados.getConnection();
+            PreparedStatement stmt = conectar.prepareStatement(sql)){
+
+            stmt.setString(1, idFilme);
+
+            int linhasModificadas = stmt.executeUpdate();
+            if(linhasModificadas > 0){
+                System.out.println("Filme "+ this.idFilme + " removido com sucesso!");
+            }
+            else{
+                System.out.println("ID " + idFilme +" inexistente!");
+            }
+
+        } catch(Exception e){
+            System.out.println("Erro ao remover o filme: "+ e.getMessage());
+        }
     }
 
     public void listarCatalogo(){
@@ -123,6 +147,7 @@ public class Filme {
             System.out.println("FILMES EM CARTAZ:\n ");
 
             while(resultado.next()){
+                this.idFilme = resultado.getString("idFilme");
                 this.titulo = resultado.getString("titulo");
                 this.duracao = resultado.getInt("duracao");
                 this.classIndic = resultado.getString("classIndic");
@@ -133,6 +158,7 @@ public class Filme {
                 System.out.println(duracao + " min");
                 System.out.println(classIndic + " anos");
                 System.out.println(genero);
+                System.out.println(idFilme);
                 System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
 
                 }

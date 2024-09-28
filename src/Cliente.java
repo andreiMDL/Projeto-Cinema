@@ -133,6 +133,37 @@ public class Cliente {
     public void atualizarDados(){
 
     }
+
+    public void exibirClientes(){
+        String sql = "SELECT * FROM Cliente";
+
+        try (Connection conectar = BancoDeDados.getConnection();
+             PreparedStatement stmt = conectar.prepareStatement(sql);
+             ResultSet resultado = stmt.executeQuery()){
+
+            System.out.println("FILMES EM CARTAZ:\n ");
+
+            while(resultado.next()){
+                this.nome = resultado.getString("idFilme");
+                this.cpf = resultado.getString("titulo");
+                this.telefone = resultado.getString("duracao");
+                this.email = resultado.getString("classIndic");
+                this.dataDeNascimento = LocalDate.parse("dataDeNascimento");
+
+                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
+                System.out.println("Nome: "+ nome);
+                System.out.println("CPF: "+ cpf);
+                System.out.println("Telefone: "+ telefone);
+                System.out.println("Email: "+ email);
+                System.out.println("Data de Nascimento: "+ dataDeNascimento);
+                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
+
+        }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     //</editor-fold>
 
     //<editor-fold desc="Formatações">
