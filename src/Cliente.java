@@ -95,11 +95,11 @@ public class Cliente {
         System.out.println("Digite seu email: ");
         this.email = scan.nextLine();
 
-        System.out.println("Digite seu telefone: ");
+        System.out.println("Digite seu telefone: (Apenas Números)");
         this.telefone = scan.nextLine();
         telefone = formatarTelefone(telefone);
 
-        System.out.println("Digite sua data de nascimento (dd/MM/yyyy): ");
+        System.out.println("Digite sua data de nascimento (Apenas Números): ");
         String dataNascimentoStr = scan.nextLine();
         dataNascimentoStr = formatData(dataNascimentoStr);
 
@@ -128,10 +128,6 @@ public class Cliente {
         }
     }
 
-    // Histórico de reservas
-    public void verHistReserva(){
-
-    }
 
     // Atualizar ou editar dados cadastrais
     public void atualizarDados(){
