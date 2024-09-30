@@ -160,6 +160,12 @@ public class Cliente {
     return false;
     }
 
+    public void fazerLogout(){
+        Options opt = new Options();
+        System.out.println("Voltando à tela inicial... ");
+        opt.exibirOptions();
+    }
+
     // Atualizar ou editar dados cadastrais
     public void atualizarDados(){
 

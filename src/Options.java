@@ -45,7 +45,7 @@ public class Options {
                 }
             } else if (opt == 7){
                 System.out.println("Obrigado e Volte Sempre!");
-                break;
+                System.exit(0);
             } else{
                 System.out.println("Resposta Inválida! ");
             }
@@ -81,10 +81,10 @@ public class Options {
 
         while (true) {
             System.out.println("Selecione uma opção: \n" +
-                    "[1] Fazer Login " +
-                    "[2] Ver Sessões " +
-                    "[3] Comprar Ingressos " +
-                    "[4] Editar Dados " +
+                    "[1] Ver Sessões " +
+                    "[2] Comprar Ingressos " +
+                    "[3] Editar Dados " +
+                    "[4] Fazer Logout" +
                     "[5] Admin " +
                     "[6] Encerrar");
 
@@ -92,7 +92,6 @@ public class Options {
             int opt = scn.nextInt();
 
             if (opt == 1) {
-                cliente.fazerLogin();
 
             }
             else if (opt == 2) {
@@ -102,7 +101,7 @@ public class Options {
 
             }
             else if(opt == 4){
-
+                cliente.fazerLogout();
             }
             else if(opt == 5){
                 if(adm.acessoAdm()){
