@@ -12,9 +12,78 @@ public class Options {
 
         while (true) {
             System.out.println("Selecione uma opção: \n" +
-                    "[1] Fazer Cadastro " +
+                    "[1] Fazer Login " +
+                    "[2] Fazer Cadastro " +
+                    "[3] Ver Sessões " +
+                    "[4] Comprar Ingressos " +
+                    "[5] Editar Dados " +
+                    "[6] Admin " +
+                    "[7] Encerrar");
+
+            System.out.printf("Digite aqui: ");
+            int opt = scn.nextInt();
+
+            if (opt == 1) {
+                if (cliente.fazerLogin()){
+                    exibirOptionsLogin();
+                }
+            }
+            else if (opt == 2) {
+                cliente.cadastroCliente();
+            }
+            else if(opt == 3){
+
+            }
+            else if(opt == 4){
+
+            }
+            else if(opt == 5){
+
+            } else if (opt == 6) {
+                if(adm.acessoAdm()){
+                    adm.optionAdm();
+                }
+            } else if (opt == 7){
+                System.out.println("Obrigado e Volte Sempre!");
+                break;
+            } else{
+                System.out.println("Resposta Inválida! ");
+            }
+        }
+    }
+
+    public void opcoesLogin(){
+        Scanner scanOpt = new Scanner(System.in);
+
+        while (true){
+            System.out.print("Email não encontrado. Deseja se cadastrar?");
+            System.out.println("[1] Sim");
+            System.out.println("[2] Não");
+            System.out.printf("Digite aqui: ");
+            int option = scanOpt.nextInt();
+
+            if (option == 1){
+                cliente.cadastroCliente();
+            }
+            if (option == 2){
+                System.out.println("Continuando sem login");
+            }
+            else {
+                System.out.println("Resposta inválida! ");
+                return;
+            }
+
+
+        }
+    }
+
+    public void exibirOptionsLogin() {
+
+        while (true) {
+            System.out.println("Selecione uma opção: \n" +
+                    "[1] Fazer Login " +
                     "[2] Ver Sessões " +
-                    "[3] Comprar Ingressos" +
+                    "[3] Comprar Ingressos " +
                     "[4] Editar Dados " +
                     "[5] Admin " +
                     "[6] Encerrar");
@@ -23,7 +92,8 @@ public class Options {
             int opt = scn.nextInt();
 
             if (opt == 1) {
-                cliente.cadastroCliente();
+                cliente.fazerLogin();
+
             }
             else if (opt == 2) {
 
@@ -40,7 +110,7 @@ public class Options {
                 }
             } else if (opt == 6) {
                 System.out.println("Obrigado e Volte Sempre!");
-                break;
+                System.exit(0);
             } else{
                 System.out.println("Resposta Inválida! ");
             }

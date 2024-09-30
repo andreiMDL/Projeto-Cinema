@@ -85,10 +85,10 @@ public class Filme {
         this.duracao = scan.nextInt();
         scan.nextLine();
 
-        System.out.println("Classificação Indicativa: ");
+        System.out.print("Classificação Indicativa: ");
         this.classIndic = scan.nextLine();
 
-        System.out.println("Gênero: ");
+        System.out.print("Gênero: ");
         this.genero = scan.nextLine();
 
         try (Connection conectar = BancoDeDados.getConnection();

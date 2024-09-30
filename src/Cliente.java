@@ -128,6 +128,37 @@ public class Cliente {
         }
     }
 
+    //Efetuar Login
+    public boolean fazerLogin() {
+        Scanner scanl = new Scanner(System.in);
+
+        System.out.printf("Digite seu email: ");
+        String emailInput = scanl.nextLine();
+
+        String sql = "SELECT * FROM Cliente WHERE email = ?";
+
+        try (Connection conectar = BancoDeDados.getConnection();
+             PreparedStatement stmt = conectar.prepareStatement(sql)) {
+
+            stmt.setString(1, emailInput);
+
+            ResultSet resultado = stmt.executeQuery();
+
+            if (resultado.next()) {
+                System.out.println("Login realizado com sucesso!");
+                return true;
+            } else {
+
+            }
+
+
+        } catch (Exception e) {
+            System.out.printf("Erro ao realizar login: " + e.getMessage());
+            return false;
+        }
+
+    return false;
+    }
 
     // Atualizar ou editar dados cadastrais
     public void atualizarDados(){
@@ -143,8 +174,6 @@ public class Cliente {
              ResultSet resultado = stmt.executeQuery()){
 
             System.out.println("CLIENTES CADASTRADOS:\n ");
-
-
 
             while(resultado.next()){
                 this.nome = resultado.getString("nome");
@@ -189,5 +218,7 @@ public class Cliente {
     public String formatarTelefone(String telefone){
         return this.telefone.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");
     }
+
+
     //</editor-fold>
 }
