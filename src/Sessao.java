@@ -63,6 +63,44 @@ public class Sessao {
         filme.listarCatalogo();
 
         System.out.printf("Digite o ID do filme para abrir sessão: ");
+        String escolha = scanl.nextLine();
+
+        filme.buscarFilme(escolha);
+
+        if(escolha == null){
+            System.out.println("Filme não encontrado.");
+            return;
+        }
+
+        String sql = "INSERT INTO Sessao (dia, horario, ingressos) VALUES (?, ?, ?)";
+
+        System.out.printf("Digite o dia da sessão: (YYYY-MM-DD)");
+        LocalDate dia = LocalDate.parse(scanl.nextLine());
+
+        System.out.printf("Digite o horário da sessão: (HH:MM:SS)");
+        LocalTime horario = LocalTime.parse(scanl.nextLine());
+
+        System.out.printf("Digite a quantidade de ingressos disponíveis: ");
+        this.ingressos = scanl.nextInt();
+
+        try(Connection conectar = BancoDeDados.getConnection();
+            PreparedStatement stmt = conectar.prepareStatement(sql)){
+
+            stmt.setDate(1, Date.valueOf(dia));
+            stmt.setTime(2, Time.valueOf(horario));
+            stmt.setInt(3, ingressos);
+
+
+            int linhasModificas = stmt.executeUpdate();
+            if(linhasModificas > 0){
+                System.out.printf("Sessão aberta com sucesso! ");
+            }
+
+        }
+        catch (Exception e){
+            System.out.println("Erro ao abrir sessão: "+ e.getMessage());
+        }
+
 
     }
 }

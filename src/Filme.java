@@ -167,7 +167,34 @@ public class Filme {
             System.out.println("Erro ao listar filmes: "+ e.getMessage());
         }
     }
-    //</editor-fold>
 
+    public void buscarFilme(String idFilme) {
+        String sql = "SELECT * FROM Filme WHERE idFilme = ?";
+        Filme filmeEncontrado = null;
+
+        try (Connection conectar = BancoDeDados.getConnection();
+             PreparedStatement stmt = conectar.prepareStatement(sql)) {
+
+            stmt.setString(1, idFilme);
+            ResultSet resultado = stmt.executeQuery();
+
+            if (resultado.next()) {
+                filmeEncontrado = new Filme(
+                        resultado.getString("idFilme"),
+                        resultado.getString("titulo"),
+                        resultado.getInt("duracao"),
+                        resultado.getString("classIndic"),
+                        resultado.getString("genero")
+                );
+            }
+
+
+        } catch (Exception e) {
+            System.out.printf("Erro ao buscar filme: " + e.getMessage());
+        }
+
+        return;
+        //</editor-fold>
+    }
 
 }
