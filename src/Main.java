@@ -9,14 +9,11 @@ public class Main {
         Options option = new Options();
 
         System.out.println("Seja Bem-Vindo ao CINEDAY\n");
+
         filme.listarCatalogo();
         option.exibirOptions();
 
-
-
-
-
-
-
     }
+
+
 }

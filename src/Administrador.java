@@ -50,12 +50,15 @@ public class Administrador extends Filme {
             Filme filme = new Filme();
             Scanner scan3 = new Scanner(System.in);
             Cliente cliente = new Cliente();
+            Sessao sessao = new Sessao();
 
             System.out.println("-=-=- Menu ADM -=-=-");
             System.out.println("[1] Adicionar Filme ");
             System.out.println("[2] Remover Filme ");
             System.out.println("[3] Exibir Clientes ");
-            System.out.println("[4] Sair de ADM");
+            System.out.println("[4] Abrir Sessão ");
+            System.out.println("[5] Fechar Sessão ");
+            System.out.println("[6] Sair de ADM");
 
             int opcao = scan3.nextInt();
             scan3.nextLine();
@@ -76,6 +79,11 @@ public class Administrador extends Filme {
                     break;
 
                 case 4:
+                    sessao.abrirSessao();
+                    break;
+                case 5:
+
+                case 6:
                     System.out.println("Saindo de ADMINISTRADOR...");
                     return;
             }
@@ -84,15 +92,6 @@ public class Administrador extends Filme {
     //</editor-fold>
 
     //<editor-fold desc="Override de Getters and Setters">
-    @Override
-    public String getIdFilme() {
-        return super.getIdFilme();
-    }
-
-    @Override
-    public void setIdFilme(String idFilme) {
-        super.setIdFilme(idFilme);
-    }
 
     @Override
     public String getTitulo() {

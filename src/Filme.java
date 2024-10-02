@@ -72,10 +72,10 @@ public class Filme {
     //<editor-fold desc="Ações">
     //Adicionar Filme
     public void adicionarFilme(){
-        String sql = "INSERT INTO Filme (idFilme, titulo, duracao, classIndic, genero) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Filme (idFilme, titulo, duracao, classIndic, genero) VALUES ( ?, ?, ?, ?, ?)";
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Id: ");//ex: MOVIE001
+        System.out.print("Id: ");//ex: 1
         this.idFilme = scan.nextLine();
 
         System.out.print("Título: ");
@@ -94,11 +94,11 @@ public class Filme {
         try (Connection conectar = BancoDeDados.getConnection();
              PreparedStatement stmt = conectar.prepareStatement(sql)){
 
-            stmt.setString(1, idFilme);
-            stmt.setString(2, titulo);
-            stmt.setInt(3, duracao);
-            stmt.setString(4, classIndic);
-            stmt.setString(5, genero);
+            stmt.setString(1, this.getIdFilme());
+            stmt.setString(2, this.getTitulo());
+            stmt.setInt(3, this.getDuracao());
+            stmt.setString(4, this.getClassIndic());
+            stmt.setString(5, this.getGenero());
 
             int linhasModificadas = stmt.executeUpdate();
             if (linhasModificadas > 0){
@@ -154,12 +154,11 @@ public class Filme {
                 this.classIndic = resultado.getString("classIndic");
                 this.genero = resultado.getString("genero");
 
-                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
+                System.out.println("Id: " + idFilme);
                 System.out.println(titulo.toUpperCase());
                 System.out.println(duracao + " min");
                 System.out.println(classIndic + " anos");
                 System.out.println(genero);
-                System.out.println(idFilme);
                 System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
 
                 }
@@ -169,5 +168,6 @@ public class Filme {
         }
     }
     //</editor-fold>
+
 
 }

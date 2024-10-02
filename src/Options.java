@@ -1,3 +1,4 @@
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 
@@ -6,6 +7,7 @@ public class Options {
     Scanner scn = new Scanner(System.in);
     Cliente cliente = new Cliente();
     Administrador adm = new Administrador();
+    Filme filme = new Filme();
 
 
     public void exibirOptions() {
@@ -26,6 +28,8 @@ public class Options {
             if (opt == 1) {
                 if (cliente.fazerLogin()){
                     exibirOptionsLogin();
+                }else {
+                    opcoesLogin();
                 }
             }
             else if (opt == 2) {
@@ -56,7 +60,7 @@ public class Options {
         Scanner scanOpt = new Scanner(System.in);
 
         while (true){
-            System.out.print("Email não encontrado. Deseja se cadastrar?");
+            System.out.println("Email não encontrado. Deseja se cadastrar?");
             System.out.println("[1] Sim");
             System.out.println("[2] Não");
             System.out.printf("Digite aqui: ");
@@ -67,6 +71,7 @@ public class Options {
             }
             if (option == 2){
                 System.out.println("Continuando sem login");
+                return;
             }
             else {
                 System.out.println("Resposta inválida! ");
@@ -84,7 +89,7 @@ public class Options {
                     "[1] Ver Sessões " +
                     "[2] Comprar Ingressos " +
                     "[3] Editar Dados " +
-                    "[4] Fazer Logout" +
+                    "[4] Fazer Logout " +
                     "[5] Admin " +
                     "[6] Encerrar");
 
@@ -115,5 +120,6 @@ public class Options {
             }
         }
     }
+
 }
 
