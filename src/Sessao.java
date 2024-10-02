@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Time;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -76,18 +73,19 @@ public class Sessao {
 
         String sql = "INSERT INTO Sessao (dia, horario, ingressos) VALUES (?, ?, ?)";
 
-        System.out.printf("Digite o dia da sessão: (somente números)");
+        System.out.printf("Digite o dia da sessão: (somente números) ");
         String diaStr = scanl.nextLine();
 
         //Formatar data
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.dia = LocalDate.parse(diaStr, formatter);
 
-        System.out.printf("Digite o horário da sessão: (somente números)");
+
+        System.out.printf("Digite o horário da sessão: ");
         String horarioStr = scanl.nextLine();
 
         //Formatar horário
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:MM");
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm");
         this.horario = LocalTime.parse(horarioStr, formatter1);
 
         System.out.printf("Digite a quantidade de ingressos disponíveis: ");
@@ -114,4 +112,54 @@ public class Sessao {
 
     }
     //</editor-fold>
+
+    public void exibirSessao(){
+        String sql = "SELECT * FROM Sessao";
+
+
+        try (Connection conectar = BancoDeDados.getConnection();
+            PreparedStatement stmt = conectar.prepareStatement(sql)){
+            ResultSet resultado = stmt.executeQuery();
+
+            System.out.println("-=- Sessões abertas -=- ");
+
+            while (resultado.next()){
+                java.sql.Date sqlDate = resultado.getDate("dia");
+                java.sql.Time sqlTime = resultado.getTime("horario");
+                this.ingressos = resultado.getInt("ingressos");
+
+                if (sqlDate != null){
+                    this.dia = sqlDate.toLocalDate();
+                }
+                else {
+                    this.dia = null;
+                }
+
+                if (sqlTime != null){
+                    this.horario = sqlTime.toLocalTime();
+                }
+                else {
+                    this.horario = null;
+                }
+
+                //Formatando data e horario
+                DateTimeFormatter formatterDia = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String diaStr = this.dia != null ? this.dia.format(formatterDia) : "N/A";
+
+                DateTimeFormatter formatterHr = DateTimeFormatter.ofPattern("HH:mm");
+                String horarioStr = this.horario != null ? this.horario.format(formatterHr) : "N/A";
+
+                System.out.println("Data: "+ diaStr);
+                System.out.println("Horário: "+ horarioStr);
+                System.out.println("Ingressos disponíveis: "+ ingressos);
+                System.out.println("===========================================");
+            }
+
+
+
+        }
+        catch (Exception e){
+            System.out.println("Erro ao exibir sessões: "+ e.getMessage());
+        }
+    }
 }

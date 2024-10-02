@@ -8,18 +8,18 @@ public class Options {
     Cliente cliente = new Cliente();
     Administrador adm = new Administrador();
     Filme filme = new Filme();
-
+    Sessao sessao = new Sessao();
 
     public void exibirOptions() {
 
         while (true) {
             System.out.println("Selecione uma opção: \n" +
-                    "[1] Fazer Login " +
-                    "[2] Fazer Cadastro " +
-                    "[3] Ver Sessões " +
-                    "[4] Comprar Ingressos " +
-                    "[5] Editar Dados " +
-                    "[6] Admin " +
+                    "[1] Fazer Login \n" +
+                    "[2] Fazer Cadastro \n" +
+                    "[3] Ver Sessões \n" +
+                    "[4] Comprar Ingressos \n" +
+                    "[5] Editar Dados \n" +
+                    "[6] Admin \n" +
                     "[7] Encerrar");
 
             System.out.printf("Digite aqui: ");
@@ -36,7 +36,7 @@ public class Options {
                 cliente.cadastroCliente();
             }
             else if(opt == 3){
-
+                sessao.exibirSessao();
             }
             else if(opt == 4){
 
@@ -97,7 +97,7 @@ public class Options {
             int opt = scn.nextInt();
 
             if (opt == 1) {
-
+                sessao.exibirSessao();
             }
             else if (opt == 2) {
 

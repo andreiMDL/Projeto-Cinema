@@ -75,9 +75,8 @@ public class Cliente {
 
     //</editor-fold>
 
-    //<editor-fold desc="Ações">
+    //<editor-fold desc="Realizar Cadastro de Cliente">
 
-    //Realizar cadastro de cliente
 
     public void cadastroCliente(){
         // SQL para inserir dados no banco
@@ -127,8 +126,10 @@ public class Cliente {
             System.out.println("Erro ao cadastrar cliente: "+ e.getMessage());
         }
     }
+    //</editor-fold>
 
-    //Efetuar Login
+    //<editor-fold desc="Efetuar Login">
+
     public boolean fazerLogin() {
         Scanner scanl = new Scanner(System.in);
 
@@ -165,12 +166,16 @@ public class Cliente {
         System.out.println("Voltando à tela inicial... ");
         opt.exibirOptions();
     }
+    //</editor-fold
 
-    // Atualizar ou editar dados cadastrais
+    //<editor-fold desc="Atualizar Dados Cadastrais">
+
     public void atualizarDados(){
 
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Exibir Clientes Cadastrados">
     public void exibirClientes(){
         String sql = "SELECT * FROM Cliente";
 
@@ -198,7 +203,6 @@ public class Cliente {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 String dataNascimentoFormatada = this.dataNascimento != null ? this.dataNascimento.format(formatter) : "N/A";
 
-                System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=");
                 System.out.println("Nome: "+ nome);
                 System.out.println("CPF: "+ cpf);
                 System.out.println("Telefone: "+ telefone);

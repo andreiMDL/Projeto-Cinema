@@ -58,7 +58,8 @@ public class Administrador extends Filme {
             System.out.println("[3] Exibir Clientes ");
             System.out.println("[4] Abrir Sessão ");
             System.out.println("[5] Fechar Sessão ");
-            System.out.println("[6] Sair de ADM");
+            System.out.println("[6] Exibir Sessões ");
+            System.out.println("[7] Sair de ADM");
 
             int opcao = scan3.nextInt();
             scan3.nextLine();
@@ -84,6 +85,9 @@ public class Administrador extends Filme {
                 case 5:
 
                 case 6:
+                    sessao.exibirSessao();
+                    break;
+                case 7:
                     System.out.println("Saindo de ADMINISTRADOR...");
                     return;
             }
