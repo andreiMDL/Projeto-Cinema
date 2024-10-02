@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Sessao {
@@ -56,6 +57,7 @@ public class Sessao {
 
     //</editor-fold>
 
+    //<editor-fold desc="Abrir Sessão">
     public void abrirSessao() {
         Filme filme = new Filme();
         System.out.println("-=- Abrir Sessão -=-");
@@ -74,11 +76,19 @@ public class Sessao {
 
         String sql = "INSERT INTO Sessao (dia, horario, ingressos) VALUES (?, ?, ?)";
 
-        System.out.printf("Digite o dia da sessão: (YYYY-MM-DD)");
-        LocalDate dia = LocalDate.parse(scanl.nextLine());
+        System.out.printf("Digite o dia da sessão: (somente números)");
+        String diaStr = scanl.nextLine();
 
-        System.out.printf("Digite o horário da sessão: (HH:MM:SS)");
-        LocalTime horario = LocalTime.parse(scanl.nextLine());
+        //Formatar data
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        this.dia = LocalDate.parse(diaStr, formatter);
+
+        System.out.printf("Digite o horário da sessão: (somente números)");
+        String horarioStr = scanl.nextLine();
+
+        //Formatar horário
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:MM");
+        this.horario = LocalTime.parse(horarioStr, formatter1);
 
         System.out.printf("Digite a quantidade de ingressos disponíveis: ");
         this.ingressos = scanl.nextInt();
@@ -103,4 +113,5 @@ public class Sessao {
 
 
     }
+    //</editor-fold>
 }
