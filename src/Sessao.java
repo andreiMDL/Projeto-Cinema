@@ -113,8 +113,46 @@ public class Sessao {
     }
     //</editor-fold>
 
+    public void fecharSessao(){
+        Filme filme = new Filme();
+        System.out.println("-=- Fechar Sessão -=-");
+        Scanner scanf = new Scanner(System.in);
+        exibirSessao();
+
+        System.out.println("Digite a ID da sessão: ");
+        String escolha = scanf.nextLine();
+
+        if(escolha == null || escolha.trim().isEmpty()){
+            System.out.println("Sessão não encontrada.");
+            return;
+        }
+
+        String sql = "DELETE FROM Sessao WHERE idSessao = ?";
+
+        try (Connection connectar = BancoDeDados.getConnection();
+            PreparedStatement stmt = connectar.prepareStatement(sql)){
+
+            stmt.setString(1, escolha);
+
+            int linhasModificadas = stmt.executeUpdate();
+            if(linhasModificadas > 0){
+                System.out.println("Sessão removida com sucesso!");
+            }
+            else {
+                System.out.println("Nenhuma sessão com essa ID foi encontrada.");
+            }
+
+        }
+        catch (Exception e){
+            System.out.println("Erro ao fechar sessão: "+ e.getMessage());
+        }
+
+
+    }
+
+    //<editor-fold desc="Exibir Sessão">
     public void exibirSessao(){
-        String sql = "SELECT * FROM Sessao";
+        String sql = "SELECT idSessao, dia, horario, ingressos FROM Sessao";
 
 
         try (Connection conectar = BancoDeDados.getConnection();
@@ -124,6 +162,7 @@ public class Sessao {
             System.out.println("-=- Sessões abertas -=- ");
 
             while (resultado.next()){
+                int idSessao = resultado.getInt("idSessao");
                 java.sql.Date sqlDate = resultado.getDate("dia");
                 java.sql.Time sqlTime = resultado.getTime("horario");
                 this.ingressos = resultado.getInt("ingressos");
@@ -152,6 +191,7 @@ public class Sessao {
                 System.out.println("Data: "+ diaStr);
                 System.out.println("Horário: "+ horarioStr);
                 System.out.println("Ingressos disponíveis: "+ ingressos);
+                System.out.println("Id: "+ idSessao);
                 System.out.println("===========================================");
             }
 
@@ -162,4 +202,5 @@ public class Sessao {
             System.out.println("Erro ao exibir sessões: "+ e.getMessage());
         }
     }
+    //</editor-fold>
 }

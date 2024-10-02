@@ -83,7 +83,8 @@ public class Administrador extends Filme {
                     sessao.abrirSessao();
                     break;
                 case 5:
-
+                    sessao.fecharSessao();
+                    break;
                 case 6:
                     sessao.exibirSessao();
                     break;
