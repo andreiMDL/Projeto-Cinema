@@ -14,13 +14,12 @@ public class Options {
 
         while (true) {
             System.out.println("Selecione uma opção: \n" +
-                    "[1] Fazer Login \n" +
-                    "[2] Fazer Cadastro \n" +
-                    "[3] Ver Sessões \n" +
-                    "[4] Comprar Ingressos \n" +
-                    "[5] Editar Dados \n" +
-                    "[6] Admin \n" +
-                    "[7] Encerrar");
+                    "[1] Fazer Login " +
+                    "[2] Fazer Cadastro " +
+                    "[3] Ver Sessões " +
+                    "[4] Comprar Ingressos " +
+                    "[5] Admin " +
+                    "[6] Encerrar");
 
             System.out.printf("Digite aqui: ");
             int opt = scn.nextInt();
@@ -31,27 +30,31 @@ public class Options {
                 }else {
                     opcoesLogin();
                 }
+                break;
             }
             else if (opt == 2) {
                 cliente.cadastroCliente();
+                break;
             }
             else if(opt == 3){
                 sessao.exibirSessao();
+                break;
             }
             else if(opt == 4){
 
             }
-            else if(opt == 5){
-
-            } else if (opt == 6) {
+            else if (opt == 5) {
                 if(adm.acessoAdm()){
                     adm.optionAdm();
                 }
-            } else if (opt == 7){
+                break;
+            } else if (opt == 6){
                 System.out.println("Obrigado e Volte Sempre!");
                 System.exit(0);
-            } else{
+            }
+            else{
                 System.out.println("Resposta Inválida! ");
+
             }
         }
     }
@@ -103,7 +106,7 @@ public class Options {
 
             }
             else if(opt == 3){
-
+                cliente.atualizarDados();
             }
             else if(opt == 4){
                 cliente.fazerLogout();

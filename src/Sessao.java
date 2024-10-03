@@ -113,6 +113,7 @@ public class Sessao {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Fechar Sessão">
     public void fecharSessao(){
         Filme filme = new Filme();
         System.out.println("-=- Fechar Sessão -=-");
@@ -149,6 +150,7 @@ public class Sessao {
 
 
     }
+    //</editor-fold>
 
     //<editor-fold desc="Exibir Sessão">
     public void exibirSessao(){
@@ -159,9 +161,12 @@ public class Sessao {
             PreparedStatement stmt = conectar.prepareStatement(sql)){
             ResultSet resultado = stmt.executeQuery();
 
-            System.out.println("-=- Sessões abertas -=- ");
+            if(!resultado.isBeforeFirst()){
+                System.out.println("Nenhuma sessão aberta.");
+            }
 
             while (resultado.next()){
+                System.out.println("-=- Sessões abertas -=- ");
                 int idSessao = resultado.getInt("idSessao");
                 java.sql.Date sqlDate = resultado.getDate("dia");
                 java.sql.Time sqlTime = resultado.getTime("horario");
@@ -193,6 +198,9 @@ public class Sessao {
                 System.out.println("Ingressos disponíveis: "+ ingressos);
                 System.out.println("Id: "+ idSessao);
                 System.out.println("===========================================");
+            }
+            if (resultado == null){
+                System.out.println("Nenhuma sessão aberta.");
             }
 
 

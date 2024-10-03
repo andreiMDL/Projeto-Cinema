@@ -87,6 +87,7 @@ public class Cliente {
         // Captura da resposta do usuário
         System.out.println("Digite seu cpf (Apenas Números): ");
         this.cpf = scan.nextLine();
+        cpf = formatarCPF();
 
         System.out.println("Digite seu nome: ");
         this.nome = scan.nextLine();
@@ -171,6 +172,85 @@ public class Cliente {
     //<editor-fold desc="Atualizar Dados Cadastrais">
 
     public void atualizarDados(){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.printf("Digite seu cpf: ");
+        String cpfInput = scan.nextLine();
+
+        String sql = "SELECT * FROM Cliente WHERE cpf = ?";
+
+        try(Connection conectar = BancoDeDados.getConnection();
+            PreparedStatement stmt = conectar.prepareStatement(sql)){
+
+            stmt.setString(1, cpfInput);
+
+            while (true) {
+                System.out.println("Editar: \n" +
+                        "[1] Telefone " +
+                        "[2] Email " +
+                        "[3] Cancelar ");
+
+                int opcao = scan.nextInt();
+                scan.nextLine();
+
+                switch (opcao){
+                    case 1:
+                        System.out.println("Digite o novo telefone: (somente números)");
+                        String telefoneUpdate = scan.nextLine();
+
+
+                        String sqlUpdate = "UPDATE Cliente SET telefone = ? WHERE cpf = ?";
+
+                        try(PreparedStatement stmtUpdate = conectar.prepareStatement(sqlUpdate)){
+                        stmtUpdate.setString(1, formatarTelefoneUpdate(telefoneUpdate));
+                        stmtUpdate.setString(2, cpfInput);
+                        int linhasModificadas = stmtUpdate.executeUpdate();
+                            System.out.println("Novo telefone: "+ this.formatarTelefoneUpdate(telefoneUpdate));
+
+                        if(linhasModificadas > 0){
+                            System.out.println("Telefone atualizado com sucesso!");
+                        }
+
+                        }
+                        catch (Exception e){
+                            System.out.println("Erro ao atualizar telefone: "+ e.getMessage());
+                        }
+                        return;
+
+                    case 2:
+                        System.out.printf("Digite o novo email: ");
+                        String emailUpdate = scan.nextLine();
+
+                        String sqlUpdate1 = "UPDATE Cliente SET email = ? WHERE cpf = ?";
+
+                        try(PreparedStatement stmtUpdate1 = conectar.prepareStatement(sqlUpdate1)){
+                            stmtUpdate1.setString(1, emailUpdate);
+                            stmtUpdate1.setString(2, cpfInput);
+                            int linhasModificadas1 = stmtUpdate1.executeUpdate();
+
+                            if(linhasModificadas1 > 0){
+                                System.out.println("Email atualizado com sucesso!");
+                            }
+
+                        }
+                        catch (Exception e){
+                            System.out.println("Erro ao atualizar email: "+ e.getMessage());
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println("Alterações canceladas. ");
+                        return;
+
+                    default:
+                        System.out.println("Opção inválida.");
+
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.println("Erro ao atualizar dados cadastrais: "+ e.getMessage());
+        }
 
     }
     //</editor-fold>
@@ -227,6 +307,10 @@ public class Cliente {
 
     public String formatarTelefone(String telefone){
         return this.telefone.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");
+    }
+
+    public String formatarTelefoneUpdate(String telefoneUpdate){
+        return telefoneUpdate.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");
     }
 
 
