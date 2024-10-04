@@ -176,14 +176,30 @@ public class Cliente {
 
         System.out.printf("Digite seu cpf: ");
         String cpfInput = scan.nextLine();
+        cpfInput = formatarCPFInput(cpfInput);
 
-        String sql = "SELECT * FROM Cliente WHERE cpf = ?";
+        System.out.printf("Digite seu email: ");
+        String emailInput = scan.nextLine();
+
+        System.out.printf("Digite seu telefone: ");
+        String telefoneInput = scan.nextLine();
+        telefoneInput = formatarTelefoneInput(telefoneInput);
+
+        String sqlVerify = "SELECT * FROM Cliente WHERE cpf = ? AND email = ? AND telefone = ?";
 
         try(Connection conectar = BancoDeDados.getConnection();
-            PreparedStatement stmt = conectar.prepareStatement(sql)){
+            PreparedStatement stmtVerify = conectar.prepareStatement(sqlVerify)){
 
-            stmt.setString(1, cpfInput);
+            stmtVerify.setString(1, cpfInput);
+            stmtVerify.setString(2,emailInput);
+            stmtVerify.setString(3, telefoneInput);
 
+            ResultSet resultado = stmtVerify.executeQuery();
+
+            if(!resultado.next()){
+                System.out.println("Erro: CPF e email não correspondem. Verifique os dados informados e tente novamente.");
+                return;
+            }
             while (true) {
                 System.out.println("Editar: \n" +
                         "[1] Telefone " +
@@ -202,14 +218,14 @@ public class Cliente {
                         String sqlUpdate = "UPDATE Cliente SET telefone = ? WHERE cpf = ?";
 
                         try(PreparedStatement stmtUpdate = conectar.prepareStatement(sqlUpdate)){
-                        stmtUpdate.setString(1, formatarTelefoneUpdate(telefoneUpdate));
-                        stmtUpdate.setString(2, cpfInput);
-                        int linhasModificadas = stmtUpdate.executeUpdate();
+                            stmtUpdate.setString(1, formatarTelefoneUpdate(telefoneUpdate));
+                            stmtUpdate.setString(2, cpfInput);
+                            int linhasModificadas = stmtUpdate.executeUpdate();
                             System.out.println("Novo telefone: "+ this.formatarTelefoneUpdate(telefoneUpdate));
 
-                        if(linhasModificadas > 0){
-                            System.out.println("Telefone atualizado com sucesso!");
-                        }
+                            if(linhasModificadas > 0){
+                                System.out.println("Telefone atualizado com sucesso!");
+                            }
 
                         }
                         catch (Exception e){
@@ -245,12 +261,17 @@ public class Cliente {
                     default:
                         System.out.println("Opção inválida.");
 
+                    }
                 }
             }
-        }
-        catch (Exception e){
-            System.out.println("Erro ao atualizar dados cadastrais: "+ e.getMessage());
-        }
+            catch (Exception e){
+                System.out.println("Erro ao atualizar dados cadastrais: "+ e.getMessage());
+            }
+
+
+
+
+
 
     }
     //</editor-fold>
@@ -300,6 +321,10 @@ public class Cliente {
 
     //<editor-fold desc="Formatações">
     // Formata a entrada dos dados para que o usuário não precise usar caracteres especiais
+    public String formatarCPFInput(String cpfInput){
+        return cpfInput.replaceAll("\\D", "").replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
+
     public String formatarCPF(){
         return cpf.replaceAll("\\D", "").replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
     }
@@ -313,6 +338,8 @@ public class Cliente {
         return telefoneUpdate.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");
     }
 
-
+    public String formatarTelefoneInput(String telefoneInput){
+        return telefoneInput.replaceAll("\\D", "").replaceFirst("(\\d{2})(\\d{5})(\\d{4})", "($1) $2-$3");
+    }
     //</editor-fold>
 }

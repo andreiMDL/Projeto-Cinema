@@ -30,15 +30,14 @@ public class Options {
                 }else {
                     opcoesLogin();
                 }
-                break;
+
             }
             else if (opt == 2) {
                 cliente.cadastroCliente();
-                break;
+
             }
             else if(opt == 3){
                 sessao.exibirSessao();
-                break;
             }
             else if(opt == 4){
 
@@ -47,7 +46,6 @@ public class Options {
                 if(adm.acessoAdm()){
                     adm.optionAdm();
                 }
-                break;
             } else if (opt == 6){
                 System.out.println("Obrigado e Volte Sempre!");
                 System.exit(0);
