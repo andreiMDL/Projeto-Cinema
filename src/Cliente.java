@@ -76,8 +76,6 @@ public class Cliente {
     //</editor-fold>
 
     //<editor-fold desc="Realizar Cadastro de Cliente">
-
-
     public void cadastroCliente(){
         // SQL para inserir dados no banco
         String sql = "INSERT INTO Cliente (cpf, nome, email, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?)";
@@ -315,6 +313,64 @@ public class Cliente {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Comprar Ingressos">
+    public void comprarIngressos(){
+        Scanner scanner = new Scanner(System.in);
+        Sessao sessao = new Sessao();
+
+        sessao.exibirSessao();
+        System.out.println(" ESCOLHA A SESSÃO ");
+        System.out.printf("Digite o ID da sessão: ");
+        String escolha = scanner.nextLine();
+
+        if(escolha == null || escolha.trim().isEmpty()){
+            System.out.println("Sessão não encontrada. ");
+            return;
+        }
+        String sqlBusca = "SELECT ingressos FROM Sessao WHERE idSessao = ?";
+
+        try (Connection conectar = BancoDeDados.getConnection();
+             PreparedStatement stmtBusca = conectar.prepareStatement(sqlBusca)){
+
+            stmtBusca.setString(1, escolha);
+            ResultSet resultado = stmtBusca.executeQuery();
+
+            if(resultado.next()){
+                int ingressosDisp = resultado.getInt("ingressos");
+
+                System.out.println("Quantos ingressos você deseja comprar? ");
+                int ingressosComprados = scanner.nextInt();
+
+                if (ingressosComprados > ingressosDisp){
+                    System.out.printf("Não há ingressos suficientes disponíveis. ");
+                    return;
+                }
+
+                String sqlAtualiza = "UPDATE Sessao SET ingressos = ? WHERE idSessao = ?";
+
+                try(PreparedStatement stmtAtualiza = conectar.prepareStatement(sqlAtualiza)){
+
+                    int ingressosRestantens = ingressosDisp - ingressosComprados;
+                    stmtAtualiza.setInt(1, ingressosRestantens);
+                    stmtAtualiza.setString(2, escolha);
+
+                    int linhasAfetadas = stmtAtualiza.executeUpdate();
+                    if(linhasAfetadas > 0){
+                        System.out.println("Ingressos comprados com sucesso! ");
+
+                    }
+                    else {
+                        System.out.println("Falha ao atualizar sessão. ");
+                    }
+                }
+            }
+        }
+        catch (Exception e){
+            System.out.printf("Erro ao buscar sessão: "+ e.getMessage());
         }
     }
     //</editor-fold>

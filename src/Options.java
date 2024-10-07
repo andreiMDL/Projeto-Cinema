@@ -17,9 +17,8 @@ public class Options {
                     "[1] Fazer Login " +
                     "[2] Fazer Cadastro " +
                     "[3] Ver Sessões " +
-                    "[4] Comprar Ingressos " +
-                    "[5] Admin " +
-                    "[6] Encerrar");
+                    "[4] Admin" +
+                    "[5] Encerrar ");
 
             System.out.printf("Digite aqui: ");
             int opt = scn.nextInt();
@@ -39,14 +38,13 @@ public class Options {
             else if(opt == 3){
                 sessao.exibirSessao();
             }
-            else if(opt == 4){
 
-            }
-            else if (opt == 5) {
+            else if (opt == 4) {
                 if(adm.acessoAdm()){
                     adm.optionAdm();
                 }
-            } else if (opt == 6){
+                return;
+            } else if (opt == 5){
                 System.out.println("Obrigado e Volte Sempre!");
                 System.exit(0);
             }
@@ -101,7 +99,7 @@ public class Options {
                 sessao.exibirSessao();
             }
             else if (opt == 2) {
-
+                cliente.comprarIngressos();
             }
             else if(opt == 3){
                 cliente.atualizarDados();

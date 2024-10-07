@@ -77,7 +77,7 @@ public class Sessao {
         String diaStr = scanl.nextLine();
 
         //Formatar data
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         this.dia = LocalDate.parse(diaStr, formatter);
 
 
@@ -101,7 +101,7 @@ public class Sessao {
 
             int linhasModificas = stmt.executeUpdate();
             if(linhasModificas > 0){
-                System.out.printf("Sessão aberta com sucesso! ");
+                System.out.println("Sessão aberta com sucesso! ");
             }
 
         }
@@ -211,4 +211,6 @@ public class Sessao {
         }
     }
     //</editor-fold>
+
+
 }
