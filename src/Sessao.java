@@ -71,7 +71,7 @@ public class Sessao {
             return;
         }
 
-        String sql = "INSERT INTO Sessao (dia, horario, ingressos) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Sessao (dia, horario, ingressos, idFilme) VALUES (?, ?, ?, ?)";
 
         System.out.printf("Digite o dia da sessão: (somente números) ");
         String diaStr = scanl.nextLine();
@@ -91,13 +91,15 @@ public class Sessao {
         System.out.printf("Digite a quantidade de ingressos disponíveis: ");
         this.ingressos = scanl.nextInt();
 
+
+
         try(Connection conectar = BancoDeDados.getConnection();
             PreparedStatement stmt = conectar.prepareStatement(sql)){
 
             stmt.setDate(1, Date.valueOf(dia));
             stmt.setTime(2, Time.valueOf(horario));
             stmt.setInt(3, ingressos);
-
+            stmt.setString(4, escolha);
 
             int linhasModificas = stmt.executeUpdate();
             if(linhasModificas > 0){
@@ -154,8 +156,9 @@ public class Sessao {
 
     //<editor-fold desc="Exibir Sessão">
     public void exibirSessao(){
-        String sql = "SELECT idSessao, dia, horario, ingressos FROM Sessao";
-
+        String sql = "SELECT Sessao.idSessao, Sessao.dia, Sessao.horario, Sessao.ingressos, Filme.titulo " +
+                "FROM Sessao " +
+                "JOIN Filme ON Sessao.idFilme = Filme.idFilme";
 
         try (Connection conectar = BancoDeDados.getConnection();
             PreparedStatement stmt = conectar.prepareStatement(sql)){
@@ -168,6 +171,7 @@ public class Sessao {
             while (resultado.next()){
                 System.out.println("-=- Sessões abertas -=- ");
                 int idSessao = resultado.getInt("idSessao");
+                String tituloFilme = resultado.getString("titulo");
                 java.sql.Date sqlDate = resultado.getDate("dia");
                 java.sql.Time sqlTime = resultado.getTime("horario");
                 this.ingressos = resultado.getInt("ingressos");
@@ -193,6 +197,7 @@ public class Sessao {
                 DateTimeFormatter formatterHr = DateTimeFormatter.ofPattern("HH:mm");
                 String horarioStr = this.horario != null ? this.horario.format(formatterHr) : "N/A";
 
+                System.out.println("Filme: "+ tituloFilme);
                 System.out.println("Data: "+ diaStr);
                 System.out.println("Horário: "+ horarioStr);
                 System.out.println("Ingressos disponíveis: "+ ingressos);

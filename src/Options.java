@@ -17,7 +17,7 @@ public class Options {
                     "[1] Fazer Login " +
                     "[2] Fazer Cadastro " +
                     "[3] Ver Sessões " +
-                    "[4] Admin" +
+                    "[4] Admin " +
                     "[5] Encerrar ");
 
             System.out.printf("Digite aqui: ");
@@ -43,7 +43,7 @@ public class Options {
                 if(adm.acessoAdm()){
                     adm.optionAdm();
                 }
-                return;
+
             } else if (opt == 5){
                 System.out.println("Obrigado e Volte Sempre!");
                 System.exit(0);
