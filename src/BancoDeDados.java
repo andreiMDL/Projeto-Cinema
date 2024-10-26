@@ -9,7 +9,7 @@ public class BancoDeDados {
         //private String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/cinema";
         String user = "root";
-        String password = "22292254";
+        String password = "senha";
 
 
        try{
